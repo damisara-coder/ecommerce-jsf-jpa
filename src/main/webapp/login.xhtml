@@ -1,0 +1,53 @@
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">Connexion - E-Commerce JSF &amp; JPA</ui:define>
+
+    <ui:define name="content">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow-sm border-0 mt-3">
+                    <div class="card-header bg-primary text-white text-center py-3">
+                        <h4 class="mb-0 fw-bold"><i class="bi bi-box-arrow-in-right me-2"></i>Espace Internaute</h4>
+                        <small>Connectez-vous pour accéder à vos commandes</small>
+                    </div>
+                    <div class="card-body p-4">
+                        <h:form id="loginForm">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Adresse Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <h:inputText value="#{internauteBean.email}" class="form-control" required="true"
+                                                 requiredMessage="Veuillez saisir votre email" />
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">Mot de passe</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <h:inputSecret value="#{internauteBean.motDePasse}" class="form-control" required="true"
+                                                   requiredMessage="Veuillez saisir votre mot de passe" />
+                                </div>
+                            </div>
+
+                            <div class="d-grid mb-3">
+                                <h:commandButton action="#{internauteBean.login}" value="Se connecter"
+                                                 class="btn btn-primary py-2 fw-semibold" />
+                            </div>
+
+                            <div class="text-center text-muted">
+                                Pas encore de compte ?
+                                <h:link outcome="inscription.xhtml" class="text-decoration-none fw-bold ms-1">Créer un compte</h:link>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

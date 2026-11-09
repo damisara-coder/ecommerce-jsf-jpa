@@ -1,0 +1,65 @@
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">Confirmation de Commande - E-Commerce JSF &amp; JPA</ui:define>
+
+    <ui:define name="content">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 text-center p-4">
+                    <div class="card-body">
+                        <div class="text-success mb-3">
+                            <i class="bi bi-check-circle-fill display-2"></i>
+                        </div>
+                        <h2 class="fw-bold text-dark">Félicitations, votre commande est confirmée !</h2>
+                        <p class="text-muted">Merci pour votre confiance. Votre commande a été persistée avec succès dans la base de données MySQL via JPA.</p>
+
+                        <div class="card bg-light border-0 my-4 text-start p-4">
+                            <h5 class="fw-bold mb-3 border-bottom pb-2">Détails de la commande</h5>
+                            <div class="row">
+                                <div class="col-sm-6 mb-2">
+                                    <span class="text-muted">Numéro de Commande :</span>
+                                    <strong class="ms-2 text-primary">#CMD-#{panierBean.derniereCommande.id}</strong>
+                                </div>
+                                <div class="col-sm-6 mb-2">
+                                    <span class="text-muted">Date :</span>
+                                    <strong class="ms-2">
+                                        <h:outputText value="#{panierBean.derniereCommande.dateCommande}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                        </h:outputText>
+                                    </strong>
+                                </div>
+                                <div class="col-sm-6 mb-2">
+                                    <span class="text-muted">Client :</span>
+                                    <strong class="ms-2">#{panierBean.derniereCommande.internaute.nomComplet}</strong>
+                                </div>
+                                <div class="col-sm-6 mb-2">
+                                    <span class="text-muted">Statut :</span>
+                                    <span class="badge bg-success ms-2">#{panierBean.derniereCommande.statut}</span>
+                                </div>
+                                <div class="col-12 mt-2 pt-2 border-top">
+                                    <span class="text-muted fs-6">Montant total réglé :</span>
+                                    <span class="fs-5 fw-bold text-danger ms-2">
+                                        <h:outputText value="#{panierBean.derniereCommande.montantTotal}">
+                                            <f:convertNumber pattern="#,##0.00" />
+                                        </h:outputText> DH
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center gap-3">
+                            <h:link outcome="vitrine.xhtml" class="btn btn-primary px-4 py-2">
+                                <i class="bi bi-arrow-left me-2"></i>Continuer mes achats
+                            </h:link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

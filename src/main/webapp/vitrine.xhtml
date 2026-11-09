@@ -1,0 +1,88 @@
+<ui:composition template="/template/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">Vitrine - E-Commerce JSF &amp; JPA</ui:define>
+
+    <ui:define name="content">
+        <!-- Bannière d'en-tête de la vitrine -->
+        <div class="p-4 mb-4 bg-white rounded-3 shadow-sm border">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="fw-bold text-dark mb-1">
+                        <i class="bi bi-shop text-primary me-2"></i>Vitrine des Produits
+                    </h2>
+                    <p class="text-muted mb-0">Découvrez nos articles technologiques et ajoutez-les à votre panier d'un simple clic.</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <h:form id="filterForm" class="d-flex justify-content-md-end">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-filter"></i></span>
+                            <h:selectOneMenu value="#{vitrineBean.selectedCategorieId}" class="form-select">
+                                <f:selectItem itemValue="0" itemLabel="Toutes les catégories" />
+                                <f:selectItems value="#{vitrineBean.categories}" var="cat"
+                                               itemValue="#{cat.id}" itemLabel="#{cat.nom}" />
+                                <f:ajax event="change" listener="#{vitrineBean.filtrer}" render=":produitsPanel" />
+                            </h:selectOneMenu>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grille des Produits -->
+        <h:panelGroup id="produitsPanel" layout="block">
+            <h:form id="vitrineForm">
+                <div class="row g-4">
+                    <ui:repeat value="#{vitrineBean.produits}" var="p">
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card card-product h-100 bg-white">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <span class="badge bg-secondary">#{p.categorie != null ? p.categorie.nom : 'Article'}</span>
+                                        <span class="badge bg-success-subtle text-success">
+                                            <i class="bi bi-check2-circle me-1"></i>En stock (#{p.quantiteStock})
+                                        </span>
+                                    </div>
+
+                                    <h5 class="card-title fw-bold text-dark">#{p.designation}</h5>
+                                    <p class="card-text text-muted flex-grow-1" style="font-size: 0.9rem;">
+                                        #{p.description}
+                                    </p>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                        <div>
+                                            <span class="text-muted small d-block">Prix unitaire</span>
+                                            <span class="fs-5 fw-bold text-primary">
+                                                <h:outputText value="#{p.prix}">
+                                                    <f:convertNumber pattern="#,##0.00" />
+                                                </h:outputText> DH
+                                            </span>
+                                        </div>
+
+                                        <h:commandButton action="#{panierBean.ajouterAuPanier(p)}"
+                                                         value="Ajouter"
+                                                         class="btn btn-warning fw-semibold px-3">
+                                            <f:ajax execute="@this" render=":navContent :produitsPanel @form" />
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+
+                <ui:fragment rendered="#{empty vitrineBean.produits}">
+                    <div class="alert alert-info text-center my-5 p-5">
+                        <i class="bi bi-info-circle display-4 mb-3 text-info"></i>
+                        <h4>Aucun produit trouvé dans cette catégorie</h4>
+                        <p class="text-muted">Veuillez sélectionner une autre catégorie ou recharger la vitrine.</p>
+                    </div>
+                </ui:fragment>
+            </h:form>
+        </h:panelGroup>
+    </ui:define>
+
+</ui:composition>

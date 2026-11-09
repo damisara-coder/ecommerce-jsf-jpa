@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title><ui:insert name="title">E-Commerce JSF &amp; JPA</ui:insert></title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet"/>
+    <style>
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .navbar-brand { font-weight: 700; letter-spacing: 0.5px; }
+        .card-product { border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s; border: none; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .card-product:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+        .badge-cart { font-size: 0.75rem; vertical-align: top; }
+        .footer { background: #1e293b; color: #94a3b8; padding: 25px 0; margin-top: 50px; }
+    </style>
+</h:head>
+<h:body>
+
+    <!-- Navigation Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+        <div class="container">
+            <h:link outcome="vitrine.xhtml" class="navbar-brand text-primary">
+                <i class="bi bi-cart4 text-warning me-2"></i>E-Shop <span class="badge bg-primary">JSF-JPA</span>
+            </h:link>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <h:link outcome="vitrine.xhtml" class="nav-link">
+                            <i class="bi bi-grid me-1"></i>Vitrine / Catalogue
+                        </h:link>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <!-- Panier -->
+                    <li class="nav-item me-3">
+                        <h:link outcome="panier.xhtml" class="btn btn-outline-warning position-relative btn-sm">
+                            <i class="bi bi-bag-check-fill me-1"></i>Panier
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                #{panierBean.nombreArticles}
+                            </span>
+                        </h:link>
+                    </li>
+
+                    <!-- Espace Internaute -->
+                    <ui:fragment rendered="#{internauteBean.estConnecte}">
+                        <li class="nav-item dropdown">
+                            <span class="navbar-text text-white me-2">
+                                <i class="bi bi-person-circle text-info me-1"></i>Bonjour, <strong>#{internauteBean.internauteConnecte.prenom}</strong>
+                            </span>
+                            <h:form style="display:inline;">
+                                <h:commandButton action="#{internauteBean.logout}" value="Déconnexion" class="btn btn-sm btn-outline-danger" />
+                            </h:form>
+                        </li>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{!internauteBean.estConnecte}">
+                        <li class="nav-item">
+                            <h:link outcome="login.xhtml" class="btn btn-outline-light btn-sm me-2">
+                                <i class="bi bi-box-arrow-in-right me-1"></i>Connexion
+                            </h:link>
+                        </li>
+                        <li class="nav-item">
+                            <h:link outcome="inscription.xhtml" class="btn btn-primary btn-sm">
+                                <i class="bi bi-person-plus me-1"></i>S'inscrire
+                            </h:link>
+                        </li>
+                    </ui:fragment>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notifications Messages JSF -->
+    <div class="container mt-3">
+        <h:messages globalOnly="true" infoClass="alert alert-success alert-dismissible fade show"
+                    warnClass="alert alert-warning alert-dismissible fade show"
+                    errorClass="alert alert-danger alert-dismissible fade show"
+                    layout="table" />
+    </div>
+
+    <!-- Contenu Principal -->
+    <main class="container my-4">
+        <ui:insert name="content">
+            <!-- Contenu spécifique de chaque vue -->
+        </ui:insert>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <p class="mb-1">Université Abdelmalek Essaadi - Faculté des Sciences et Techniques de Tanger (FSTT)</p>
+            <p class="mb-0 text-secondary">Cycle Ingénieur LSI - Module JEE - Atelier JSF &amp; JPA - Pr. ELAACHAK LOTFI</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</h:body>
+</html>
